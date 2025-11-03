@@ -1,7 +1,4 @@
-<%--
-  This is the FULL code for login.jsp.
-  It fulfills the "frontend" role and replaces the placeholder.
---%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
