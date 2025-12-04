@@ -7,10 +7,9 @@
     String pass = request.getParameter("password");
 
     // 2. Database Connection Details
-    // !! IMPORTANT: Update these with your MySQL username and password !!
     String dbUrl = "jdbc:mysql://localhost:3306/projectdb";
-    String dbUser = "root"; // Or your MySQL username
-    String dbPass = "your_mysql_password"; // !! CHANGE THIS !!
+    String dbUser = "root"; // 
+    String dbPass = "password123"; //
 
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -18,7 +17,6 @@
 
     try {
         // 3. Load the MySQL JDBC Driver
-        // Make sure you have added the mysql-connector-j-X.X.XX.jar to your /WEB-INF/lib/ folder!
         Class.forName("com.mysql.cj.jdbc.Driver");
         
         // 4. Establish the connection
@@ -29,7 +27,7 @@
         
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, user);
-        pstmt.setString(2, pass); // Note: In a real app, passwords would be hashed!
+        pstmt.setString(2, pass); 
         
         // 6. Execute the query
         rs = pstmt.executeQuery();
