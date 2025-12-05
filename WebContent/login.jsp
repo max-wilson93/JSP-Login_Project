@@ -8,7 +8,7 @@
     <meta name-"viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Login Page</title>
     <style>
-        /* Basic CSS for a clean look */
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: grid;
