@@ -13,9 +13,7 @@
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
         
-        // --- THE FIX IS HERE ---
-        // Old Code: SELECT * FROM users WHERE username = ?
-        // New Code: SELECT UserID FROM User WHERE LoginID = ?
+        
         String sql = "SELECT UserID FROM User WHERE LoginID = ? AND Password = ?";
         
         PreparedStatement ps = conn.prepareStatement(sql);

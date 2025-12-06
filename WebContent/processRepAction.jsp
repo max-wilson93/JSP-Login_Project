@@ -2,13 +2,11 @@
 <%
     String action = request.getParameter("action");
     Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "password123");
-
-    if ("delete".equals(action)) {
-        // Delete Auction
+    
+    if ("deleteAuction".equals(action)) {
         String id = request.getParameter("id");
         conn.createStatement().execute("DELETE FROM Auction WHERE AuctionID=" + id);
     } else {
-        // Answer Question
         String qid = request.getParameter("qid");
         String ans = request.getParameter("answer");
         int repId = (int) session.getAttribute("userID");

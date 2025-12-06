@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; ccharset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head><title>Sell Item</title></head>
 <body>
     <%@ include file="home.jsp" %>
-    <h2>List an Item for Auction</h2>
+    <h2>List an Item</h2>
     <form action="processAuction.jsp" method="post">
         <label>Item Name:</label><br>
-        <input type="text" name="title" required><br><br>
+        <input type="text" name="title" required style="width:300px;"><br><br>
         
         <label>Description:</label><br>
         <textarea name="description" rows="4" cols="50"></textarea><br><br>
@@ -15,16 +15,18 @@
         <label>Category:</label><br>
         <select name="category">
             <option value="1">Electronics</option>
-            <option value="1">General</option> <!-- Simplified for demo -->
+            <option value="1">Home</option>
+            <option value="1">Clothing</option>
         </select><br><br>
 
         <label>Starting Price ($):</label><br>
         <input type="number" step="0.01" name="initial_price" required><br><br>
         
-        <label>Reserve Price (Hidden Minimum):</label><br>
-        <input type="number" step="0.01" name="min_price" value="0.00"><br><br>
+        <label>Secret Reserve Price (Optional):</label><br>
+        <input type="number" step="0.01" name="min_price" value="0.00"><br>
+        <small>If bidding doesn't reach this, you don't have to sell.</small><br><br>
         
-        <label>Duration (Days):</label><br>
+        <label>Duration:</label><br>
         <select name="days">
             <option value="1">1 Day</option>
             <option value="3">3 Days</option>
@@ -33,5 +35,4 @@
         
         <input type="submit" value="Start Auction">
     </form>
-</body>
-</html>
+    </div></body></html>

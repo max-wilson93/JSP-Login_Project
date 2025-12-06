@@ -5,39 +5,34 @@
 <body>
     <%@ include file="home.jsp" %>
     <% if (!"rep".equals(session.getAttribute("role"))) { response.sendRedirect("home.jsp"); return; } %>
-
-    <h2>Customer Service & Moderation</h2>
     
-    <h3>Unanswered Questions</h3>
+    <h2>Customer Service</h2>
+    <h3>Questions needing answers</h3>
     <ul>
     <%
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "password123");
-        // Linking Questions to Users via EndUser table
-        ResultSet rsQ = conn.createStatement().executeQuery("SELECT q.QuestionID, q.QuestionText, u.LoginID FROM Questions q JOIN EndUser e ON q.EndUserID=e.UserID JOIN User u ON e.UserID=u.UserID WHERE q.AnswerText IS NULL");
+        ResultSet rsQ = conn.createStatement().executeQuery("SELECT QuestionID, QuestionText FROM Questions WHERE AnswerText IS NULL");
         while(rsQ.next()) {
     %>
         <li>
-            <%= rsQ.getString("LoginID") %> asks: "<%= rsQ.getString("QuestionText") %>"
-            <form action="processRepAction.jsp" method="post">
+            "<%= rsQ.getString("QuestionText") %>"
+            <form action="processRepAction.jsp" method="post" style="display:inline;">
                 <input type="hidden" name="qid" value="<%= rsQ.getInt("QuestionID") %>">
-                <input type="text" name="answer" placeholder="Answer here...">
+                <input type="text" name="answer" placeholder="Answer...">
                 <input type="submit" value="Reply">
             </form>
         </li>
     <% } %>
     </ul>
 
-    <h3>Manage Auctions</h3>
+    <h3>Moderation</h3>
+    <h4>Active Auctions</h4>
     <ul>
     <%
-        ResultSet rsAuc = conn.createStatement().executeQuery("SELECT AuctionID, ItemName FROM Auction");
-        while(rsAuc.next()) {
+        ResultSet rsA = conn.createStatement().executeQuery("SELECT AuctionID, ItemName FROM Auction");
+        while(rsA.next()) {
     %>
-        <li>
-            <%= rsAuc.getString("ItemName") %> 
-            <a href="processRepAction.jsp?action=delete&id=<%= rsAuc.getInt("AuctionID") %>" style="color:red;">[DELETE]</a>
-        </li>
+        <li><%= rsA.getString("ItemName") %> <a href="processRepAction.jsp?action=deleteAuction&id=<%= rsA.getInt("AuctionID") %>" style="color:red;">[DELETE AUCTION]</a></li>
     <% } %>
     </ul>
-</body>
-</html>
+    </div></body></html>

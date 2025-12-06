@@ -4,44 +4,47 @@
 <head><title>My Activity</title></head>
 <body>
     <%@ include file="home.jsp" %>
-    <h2>My Dashboard</h2>
+    <h2>My Activity</h2>
     <%
         int userId = (int) session.getAttribute("userID");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "password123");
     %>
-
-    <!-- ALERTS (Checklist: Alert when outbid) -->
-    <div style="border: 2px solid red; padding: 10px; background: #ffe6e6;">
-        <h3>Alerts</h3>
+    <div style="border: 2px solid #ff9800; padding: 10px; background: #fff8e1; margin-bottom: 20px;">
+        <h3> Notifications</h3>
         <ul>
         <%
-            // Logic: Find auctions where I have an AutoBid, but I am NOT the winner in the Bid table
-            String sqlAlert = "SELECT a.ItemName, a.AuctionID FROM AutoBid ab JOIN Auction a ON ab.AuctionID = a.AuctionID WHERE ab.UserID = ? AND a.Status='Active' AND ab.UserID != (SELECT BuyerID FROM Bid WHERE AuctionID=a.AuctionID ORDER BY BidAmount DESC LIMIT 1)";
-            PreparedStatement psAlert = conn.prepareStatement(sqlAlert);
-            psAlert.setInt(1, userId);
-            ResultSet rsAlert = psAlert.executeQuery();
-            boolean hasAlert = false;
-            while(rsAlert.next()) {
-                hasAlert = true;
-        %>
-            <li>You have been <strong>OUTBID</strong> on <a href="item.jsp?id=<%= rsAlert.getInt("AuctionID") %>"><%= rsAlert.getString("ItemName") %></a>!</li>
-        <% } 
-           if(!hasAlert) out.println("<li>No alerts.</li>");
+            String sqlOutbid = "SELECT a.ItemName, a.AuctionID FROM AutoBid ab JOIN Auction a ON ab.AuctionID = a.AuctionID WHERE ab.UserID = ? AND a.Status='Active' AND ab.UserID != (SELECT BuyerID FROM Bid WHERE AuctionID=a.AuctionID ORDER BY BidAmount DESC LIMIT 1)";
+            PreparedStatement psOut = conn.prepareStatement(sqlOutbid);
+            psOut.setInt(1, userId);
+            ResultSet rsOut = psOut.executeQuery();
+            while(rsOut.next()) {
+                out.println("<li style='color:red;'>OUTBID! <a href='item.jsp?id="+rsOut.getInt("AuctionID")+"'>"+rsOut.getString("ItemName")+"</a> is slipping away!</li>");
+            }
+            
+            PreparedStatement psCriteria = conn.prepareStatement("SELECT SearchCriteria FROM Alert WHERE UserID=?");
+            psCriteria.setInt(1, userId);
+            ResultSet rsCrit = psCriteria.executeQuery();
+            while(rsCrit.next()) {
+                String criteria = rsCrit.getString("SearchCriteria");
+                PreparedStatement psMatch = conn.prepareStatement("SELECT AuctionID, ItemName FROM Auction WHERE ItemName LIKE ? AND StartTime > DATE_SUB(NOW(), INTERVAL 1 DAY)");
+                psMatch.setString(1, "%" + criteria + "%");
+                ResultSet rsMatch = psMatch.executeQuery();
+                while(rsMatch.next()) {
+                    out.println("<li style='color:green;'>NEW ITEM! A <a href='item.jsp?id="+rsMatch.getInt("AuctionID")+"'>"+rsMatch.getString("ItemName")+"</a> matches your alert for '" + criteria + "'.</li>");
+                }
+            }
         %>
         </ul>
     </div>
-
-    <!-- SELLING HISTORY -->
-    <h3>My Auctions</h3>
+    <h3>My Selling</h3>
     <ul>
     <%
         PreparedStatement psSell = conn.prepareStatement("SELECT * FROM Auction WHERE SellerID=?");
         psSell.setInt(1, userId);
         ResultSet rsSell = psSell.executeQuery();
         while(rsSell.next()) {
+            out.println("<li>" + rsSell.getString("ItemName") + " - " + rsSell.getString("Status") + "</li>");
+        }
     %>
-        <li><%= rsSell.getString("ItemName") %> - Status: <%= rsSell.getString("Status") %></li>
-    <% } %>
     </ul>
-</body>
-</html>
+    </div></body></html>
