@@ -1,16 +1,12 @@
 <%@ page import="java.sql.*" %>
-<!DOCTYPE html>
-<html>
-<head><title>My Activity</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <h2>My Activity</h2>
     <%
         int userId = (int) session.getAttribute("userID");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "password123");
     %>
     <div style="border: 2px solid #ff9800; padding: 10px; background: #fff8e1; margin-bottom: 20px;">
-        <h3> Notifications</h3>
+        <h3>Notifications</h3>
         <ul>
         <%
             String sqlOutbid = "SELECT a.ItemName, a.AuctionID FROM AutoBid ab JOIN Auction a ON ab.AuctionID = a.AuctionID WHERE ab.UserID = ? AND a.Status='Active' AND ab.UserID != (SELECT BuyerID FROM Bid WHERE AuctionID=a.AuctionID ORDER BY BidAmount DESC LIMIT 1)";
@@ -47,4 +43,6 @@
         }
     %>
     </ul>
-    </div></body></html>
+    </div>
+</body>
+</html>

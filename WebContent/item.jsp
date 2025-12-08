@@ -1,11 +1,9 @@
 <%@ page import="java.sql.*" %>
-<!DOCTYPE html>
-<html>
-<head><title>Item Details</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <%
-        int auctionId = Integer.parseInt(request.getParameter("id"));
+        String idParam = request.getParameter("id");
+        if(idParam == null) { out.println("Invalid ID"); return; }
+        int auctionId = Integer.parseInt(idParam);
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "password123");
         
         PreparedStatement psItem = conn.prepareStatement("SELECT * FROM Auction WHERE AuctionID=?");
@@ -31,7 +29,7 @@
                 <input type="number" step="0.01" name="amount" required>
                 <input type="submit" value="Bid">
             </form>
-            <small>Automatic bidding active. We bid for you up to your max.</small>
+            <small>Automatic bidding active.</small>
         </div>
 
         <h3>Bid History</h3>
@@ -42,22 +40,17 @@
             ResultSet rsHist = psHist.executeQuery();
             while(rsHist.next()) {
         %>
-            <li>$<%= rsHist.getDouble("BidAmount") %> - <%= rsHist.getString("LoginID") %> (<%= rsHist.getTimestamp("BidTime") %>)</li>
+            <li>$<%= rsHist.getDouble("BidAmount") %> - <%= rsHist.getString("LoginID") %></li>
         <% } %>
         </ul>
+        
+        <h3>Ask Question</h3>
+        <form action="processQuestion.jsp" method="post">
+             <input type="text" name="question" placeholder="Ask about this item..." required>
+             <input type="submit" value="Ask">
+        </form>
 
-        <h3>Similar Items (Last Month)</h3>
-        <ul>
-        <%
-            String sqlSim = "SELECT AuctionID, ItemName FROM Auction WHERE CategoryID=? AND AuctionID != ? AND CloseTime BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() LIMIT 5";
-            PreparedStatement psSim = conn.prepareStatement(sqlSim);
-            psSim.setInt(1, rs.getInt("CategoryID"));
-            psSim.setInt(2, auctionId);
-            ResultSet rsSim = psSim.executeQuery();
-            while(rsSim.next()) {
-        %>
-            <li><a href="item.jsp?id=<%= rsSim.getInt("AuctionID") %>"><%= rsSim.getString("ItemName") %></a></li>
-        <% } %>
-        </ul>
     <% } conn.close(); %>
-    </div></body></html>
+    </div>
+</body>
+</html>

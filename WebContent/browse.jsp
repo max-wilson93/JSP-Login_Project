@@ -1,14 +1,10 @@
 <%@ page import="java.sql.*" %>
-<!DOCTYPE html>
-<html>
-<head><title>Browse</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <h2>Browse Auctions</h2>
     
     <div style="background:#e9e9e9; padding:15px; border-radius:5px;">
         <form action="browse.jsp" method="get">
-            Search: <input type="text" name="search" placeholder="Item Name or Category..." value="<%= request.getParameter("search")!=null?request.getParameter("search"):"" %>">
+            Search: <input type="text" name="search" placeholder="Item Name..." value="<%= request.getParameter("search")!=null?request.getParameter("search"):"" %>">
             Sort: 
             <select name="sort">
                 <option value="CloseTime ASC">Ending Soon</option>
@@ -56,4 +52,6 @@
             </tr>
         <% } conn.close(); %>
     </table>
-    </div></body></html>
+    </div> 
+</body>
+</html>

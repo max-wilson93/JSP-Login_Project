@@ -1,9 +1,5 @@
 <%@ page import="java.sql.*" %>
-<!DOCTYPE html>
-<html>
-<head><title>Rep Dashboard</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <% if (!"rep".equals(session.getAttribute("role"))) { response.sendRedirect("home.jsp"); return; } %>
     
     <h2>Customer Service</h2>
@@ -35,4 +31,6 @@
         <li><%= rsA.getString("ItemName") %> <a href="processRepAction.jsp?action=deleteAuction&id=<%= rsA.getInt("AuctionID") %>" style="color:red;">[DELETE AUCTION]</a></li>
     <% } %>
     </ul>
-    </div></body></html>
+    </div> 
+</body>
+</html>

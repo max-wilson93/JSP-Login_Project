@@ -120,5 +120,15 @@ INSERT INTO User (LoginID, Password, Email) VALUES ('buyer1', 'password123', 'bu
 SET @buyerID = LAST_INSERT_ID();
 INSERT INTO EndUser (UserID) VALUES (@buyerID);
 
--- 4. Create a dummy Category
+-- 4. Create a 'buyer2' user (User -> EndUser)
+INSERT INTO User (LoginID, Password, Email) VALUES ('buyer2', 'password123', 'buyer@site.com');
+SET @buyerID = LAST_INSERT_ID();
+INSERT INTO EndUser (UserID) VALUES (@buyerID);
+
+-- 5. Create a 'buyer3' user (User -> EndUser)
+INSERT INTO User (LoginID, Password, Email) VALUES ('buyer3', 'password123', 'buyer@site.com');
+SET @buyerID = LAST_INSERT_ID();
+INSERT INTO EndUser (UserID) VALUES (@buyerID);
+
+-- 6. Create a dummy Category
 INSERT INTO Category (CategoryName) VALUES ('Electronics');

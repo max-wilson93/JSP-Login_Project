@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*, java.time.LocalDateTime" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     if (session.getAttribute("userID") == null) { response.sendRedirect("login.jsp"); return; }
     int sellerId = (int) session.getAttribute("userID");
@@ -8,7 +9,6 @@
     int days = Integer.parseInt(request.getParameter("days"));
     Timestamp closeTime = Timestamp.valueOf(LocalDateTime.now().plusDays(days));
 
-    // Matching Schema: InitialPrice = Start, MinPrice = Reserve
     String sql = "INSERT INTO Auction (SellerID, CategoryID, ItemName, ItemDescription, InitialPrice, MinPrice, BidIncrement, StartTime, CloseTime, Status) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, 'Active')";
     PreparedStatement ps = conn.prepareStatement(sql);
     

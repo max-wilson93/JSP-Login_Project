@@ -1,9 +1,4 @@
-<%@ page language="java" contentType="text/html; ccharset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head><title>Sell Item</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <h2>List an Item</h2>
     <form action="processAuction.jsp" method="post">
         <label>Item Name:</label><br>
@@ -15,8 +10,7 @@
         <label>Category:</label><br>
         <select name="category">
             <option value="1">Electronics</option>
-            <option value="1">Home</option>
-            <option value="1">Clothing</option>
+            <option value="1">General</option>
         </select><br><br>
 
         <label>Starting Price ($):</label><br>
@@ -35,4 +29,6 @@
         
         <input type="submit" value="Start Auction">
     </form>
-    </div></body></html>
+    </div> 
+</body>
+</html>

@@ -1,13 +1,9 @@
 <%@ page import="java.sql.*" %>
-<!DOCTYPE html>
-<html>
-<head><title>Q&A</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <h2>Community Q&A</h2>
     
     <form action="questions.jsp" method="get">
-        Search Questions: <input type="text" name="qsearch" placeholder="Keyword...">
+        Search: <input type="text" name="qsearch" placeholder="Keyword...">
         <input type="submit" value="Search">
     </form>
     
@@ -42,4 +38,6 @@
         </li><br>
     <% } conn.close(); %>
     </ul>
-    </div></body></html>
+    </div>
+</body>
+</html>

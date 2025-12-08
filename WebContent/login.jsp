@@ -144,7 +144,7 @@
                 </form>
         
         <%
-            } // End of else
+            } 
         %>
 
     </div>

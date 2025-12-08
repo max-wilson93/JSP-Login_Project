@@ -1,9 +1,5 @@
 <%@ page import="java.sql.*" %>
-<!DOCTYPE html>
-<html>
-<head><title>Admin Reports</title></head>
-<body>
-    <%@ include file="home.jsp" %>
+<%@ include file="header.jsp" %>
     <% if (!"admin".equals(session.getAttribute("role"))) { response.sendRedirect("home.jsp"); return; } %>
     
     <h2>Reports</h2>
@@ -30,4 +26,6 @@
         User: <input type="text" name="user"> Pass: <input type="text" name="pass">
         <input type="submit" value="Create">
     </form>
-    </div></body></html>
+    </div> 
+</body>
+</html>
