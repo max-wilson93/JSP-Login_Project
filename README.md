@@ -1,27 +1,27 @@
-### JSP Final Project
+# JSP Final Project
 Maxwell Wilson
 Robert Reuter
 Logan Ford
 
 Group 10
 ## Account credentials:
-# Admin:
+### Admin:
 User: admin
 Pass: password123
 
-# Customer Rep:
+### Customer Rep:
 User: rep1
 Pass: password123
 
-# Buyer1:
+### Buyer1:
 User: buyer1
 Pass: password123
 
-# Buyer2:
+### Buyer2:
 User: buyer2
 Pass: password123
 
-# Buyer3:
+### Buyer3:
 User: buyer3
 Pass: password123
 
@@ -35,7 +35,7 @@ mysql -u root -p[Local_SQL_Password] < database.sql
 cd
 ```
 
-# Start the server
+### Start the server
 
 Copy all of WebContents into a new folder named 'project' inside the Tomcat 'webapps' directory.
 
